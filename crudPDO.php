@@ -44,9 +44,12 @@ catch (Exception $e) {
 // $cod = $pdo->query("DELETE FROM pessoa") //apaga toda a tabela pessoa
 
 //----------------------------UPDATE------------------------------------
-$cod = $pdo->prepare("UPDATE pessoa SET email = :e WHERE id = :id");
+// $cod = $pdo->prepare("UPDATE pessoa SET email = :e WHERE id = :id");
 
-$cod->bindValue(":e", "teste@gmail.com");
-$cod->bindValue(":id", "2");
-$cod->execute();
+// $cod->bindValue(":e", "teste@gmail.com");
+// $cod->bindValue(":id", "2");
+// $cod->execute();
+
+// $cod = $pdo->query("UPDATE pessoa SET telefone = '0000-0000' WHERE id = '2'");
+
 ?>
