@@ -1,4 +1,7 @@
 <?php 
+
+// CONTEXTUALIZANDO
+
 //----------------------------CONEXÃO------------------------------------
 // evitar erros try catch
 try{
