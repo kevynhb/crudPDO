@@ -23,9 +23,26 @@
             $res = $cmd->fetchAll(PDO::FETCH_ASSOC); // transfomra as informações recebicas em array e assoc para economizar memória
             return $res;
         }
+
+        // função de cadrastar pessoas no banco de dados
+        public function cadrastarPessoa($nome, $telefone, $email) {
+            // verificar se já foi cadrastado anteriormente com base no email
+            $cmd = $this->pdo->prepare("SELECT id from pessoa WHERE email = :e");
+            $cmd->bindValue(":e", $email);
+            $cmd->execute();
+
+            if($cmd->rowCount() > 0) {
+                return false;
+            }else { //não foi encontrado o email
+                $cmd = $this->pdo->prepare("INSERT INTO pessoa (nome, telefone, email) VALUES (:n, :t, :e)");
+                $cmd->bindValue(":n", $nome); //subistituir
+                $cmd->bindValue(":t", $telefone);
+                $cmd->bindValue(":e", $email); 
+                $cmd->execute();
+                return true;
+            }
+
+        }
     }
-
-
-
 
 ?>  
