@@ -2,7 +2,7 @@
     // Chamando a classe
     require_once 'Pessoa.php';
     // Instanciando a classe
-    $p = new Pessoa("crudpdo", "localhost", "root", "");
+    $p = new Pessoa("crudpdo", "localhost", "root", ""); // Objeto da classe pessoa
 ?>
 
 <html lang="pt-br">
@@ -14,9 +14,25 @@
  </head>
  <body>
 
+    <?php 
+        if (isset($_POST['nome'])) {
+            $nome = addslashes($_POST['nome']);
+            $telefone = addslashes($_POST['telefone']);
+            $email = addslashes($_POST['email']);
+            if (!empty($nome) && !empty($telefone) && !empty($email)) { // se não estiver vazio
+                //cadrastar
+                if (!$p->cadrastarPessoa($nome, $telefone, $email)){ // se o retorno for false, executa esse if
+                    echo"Email já está cadrastado!";
+                }
+            }else {
+                echo "Preencha todos os campos";
+            }
+        }
+    ?>
+
     <section id="left">
 
-        <form action="">
+        <form method="POST">
             <h2>Cadrastar Pessoa</h2>
 
             <label for="nome">Nome</label>
@@ -26,7 +42,7 @@
             <input type="text" name="telefone" id="telefone">
 
             <label for="email">E-mail</label>
-            <input type="text" name="email" id="email">
+            <input type="email" name="email" id="email">
             
             <input type="submit" value="Cadrastar">
         </form>
@@ -54,19 +70,27 @@
                         }
                     }
                     ?>
-                    <td><a href="">Editar</a><a href="">Excluir</a></td>
+                    <td>
+                        <a href="">Editar</a>
+                        <a href="index.php?id=<?php echo $dados[$i]['id'] ?>">Excluir</a>
+                    </td>
                     <?php
                     echo "</tr>";
                 }
-            
+            }else { // O banco esta vazio
+                echo "Ainda não há pessoas cadrastadas!";
             }
-
         ?>
-
-    
         </table>
 
     </section>
-
  </body>
  </html>
+
+ <?php 
+    if(isset($_GET['id'])) { 
+        $id_pessoa = addslashes($_GET['id']); // pega o id informado
+        $p->excluirPessoa($id_pessoa); // passa o id para a função excluir
+        header("location: index.php"); //atualiza a página  
+    }
+ ?>

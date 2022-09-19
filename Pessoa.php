@@ -43,6 +43,12 @@
             }
 
         }
+
+        public function excluirPessoa($id) {
+            $cmd = $this->pdo->prepare("DELETE from pessoa WHERE id = :id");
+            $cmd->bindValue(":id",$id);
+            $cmd->execute();
+        }
     }
 
 ?>  
