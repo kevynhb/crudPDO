@@ -49,6 +49,22 @@
             $cmd->bindValue(":id",$id);
             $cmd->execute();
         }
+
+        // Buscar dados de uma pessoa 
+        public function buscarDadosPessoa($id) {
+            $res = array(); //previnindo erro, caso não retorne nada do banco, aparecera um array vazio.
+            $cmd = $this->pdo->prepare("SELECT * FROM pessoa WHERE id = :id");
+            $cmd->bindValue(":id",$id);
+            $cmd->execute();
+            $res = $cmd->fetch(PDO::FETCH_ASSOC);
+            return $res;
+        }
+
+
+        // Atualizar dados no banco de dados 
+        public function atualizarDados() {
+
+        } 
     }
 
 ?>  

@@ -28,6 +28,11 @@
                 echo "Preencha todos os campos";
             }
         }
+
+        if(isset($_GET['id_up'])) {
+            $id_update = addslashes($_GET['id_up']);
+            $res = $p->buscarDadosPessoa($id_update); // envia para a função
+        }
     ?>
 
     <section id="left">
@@ -36,15 +41,15 @@
             <h2>Cadrastar Pessoa</h2>
 
             <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome">
+            <input type="text" name="nome" id="nome" value="<?php if(isset($res)){echo $res['nome'];}?>">
 
             <label for="telefone">telefone</label>
-            <input type="text" name="telefone" id="telefone">
+            <input type="text" name="telefone" id="telefone" value="<?php if(isset($res)){echo $res['telefone'];}?>">
 
             <label for="email">E-mail</label>
-            <input type="email" name="email" id="email">
+            <input type="email" name="email" id="email" value="<?php if(isset($res)){echo $res['email'];}?>">
             
-            <input type="submit" value="Cadrastar">
+            <input type="submit" value="<?php if(isset($res)){echo "Atualizar";}else{echo "Cadrastar";}?>">
         </form>
 
     </section>
@@ -71,7 +76,7 @@
                     }
                     ?>
                     <td>
-                        <a href="">Editar</a>
+                        <a href="index.php?id_up=<?php echo $dados[$i]['id'] ?>">Editar</a>
                         <a href="index.php?id=<?php echo $dados[$i]['id'] ?>">Excluir</a>
                     </td>
                     <?php
