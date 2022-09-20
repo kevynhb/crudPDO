@@ -62,9 +62,15 @@
 
 
         // Atualizar dados no banco de dados 
-        public function atualizarDados() {
-
-        } 
+        public function atualizarDados($id, $nome, $telefone, $email) {
+            $cmd = $this->pdo->prepare("UPDATE pessoa SET nome = :n, telefone = :t, email = :e 
+                WHERE id = :id"); // atualiza na tabela pessoa os atributos nome, telefone e mail, onde o id é o id repassado.
+            $cmd->bindValue(":n",$nome);
+            $cmd->bindValue(":t",$telefone);
+            $cmd->bindValue(":e",$email);
+            $cmd->bindValue(":id",$id);
+            $cmd->execute();
+        }
     }
 
 ?>  

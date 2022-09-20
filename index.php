@@ -15,21 +15,39 @@
  <body>
 
     <?php 
-        if (isset($_POST['nome'])) {
-            $nome = addslashes($_POST['nome']);
-            $telefone = addslashes($_POST['telefone']);
-            $email = addslashes($_POST['email']);
-            if (!empty($nome) && !empty($telefone) && !empty($email)) { // se não estiver vazio
-                //cadrastar
-                if (!$p->cadrastarPessoa($nome, $telefone, $email)){ // se o retorno for false, executa esse if
-                    echo"Email já está cadrastado!";
-                }
+        if (isset($_POST['nome'])) { // Clicou no botão cadrastar ou editar
+            // -------------------EDITAR------------------------
+            if(isset($_GET['id_up']) && !empty($_GET['id_up'])){
+                $id_upd = addslashes($_GET['id_up']);
+                $nome = addslashes($_POST['nome']);
+                $telefone = addslashes($_POST['telefone']);
+                $email = addslashes($_POST['email']);
+                if (!empty($nome) && !empty($telefone) && !empty($email)) { // se não estiver vazio
+                    //Editar
+                   $p->atualizarDados($id_upd, $nome, $telefone, $email); // se o retorno for false, executa esse if
+                    header("location: index.php");
+                }else {
+                    echo "Preencha todos os campos";
+                } 
+            // ------------------CADRASTAR----------------------
             }else {
-                echo "Preencha todos os campos";
+                $nome = addslashes($_POST['nome']);
+                $telefone = addslashes($_POST['telefone']);
+                $email = addslashes($_POST['email']);
+                if (!empty($nome) && !empty($telefone) && !empty($email)) { // se não estiver vazio
+                    //cadrastar
+                    if (!$p->cadrastarPessoa($nome, $telefone, $email)){ // se o retorno for false, executa esse if
+                        echo"Email já está cadrastado!";
+                    }
+                }else {
+                    echo "Preencha todos os campos";
+                }
             }
+
+            
         }
 
-        if(isset($_GET['id_up'])) {
+        if(isset($_GET['id_up'])) { // verifica se a pessoa clicou em Editar.
             $id_update = addslashes($_GET['id_up']);
             $res = $p->buscarDadosPessoa($id_update); // envia para a função
         }
